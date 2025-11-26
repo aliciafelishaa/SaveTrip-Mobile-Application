@@ -13,6 +13,7 @@ public class Trip {
     private String note;
     private String createdAt;
 
+    public Trip() {}
     public Trip(int userId, String tripName, String destinationCountry, String startDate, String endDate, double initialBudget, String baseCurrency, String note) {
         this.userId = userId;
         this.tripName = tripName;

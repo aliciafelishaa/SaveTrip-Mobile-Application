@@ -8,28 +8,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static final String DBNAME = "SaveTripDB.db";
     static final int DBVERSION = 1;
 
-    public static final String TABLE_USER = "User";
-    public static final String TABLE_TRIP = "Trip";
     public static final String TABLE_TRANSACTION = "Transactions";
+    public static final String TABLE_TRANSACTION_CATEGORIES = "Transaction_categories";
     public static final String TABLE_EXCHANGE = "Trip_exchange_rate";
 
-    //USER
-    public static final String USER_ID = "user_id";
-    public static final String USER_NAME = "name";
-    public static final String USER_EMAIL = "email";
-    public static final String USER_PASSWORD = "password";
-
-    //TRIP
-    public static final String TRIP_ID = "trip_id";
-    public static final String TRIP_USER_ID = "user_id";
-    public static final String TRIP_NAME = "trip_name";
-    public static final String TRIP_DESTINATION_COUNTRY = "destination_country";
-    public static final String TRIP_START_DATE = "start_date";
-    public static final String TRIP_END_DATE = "end_date";
-    public static final String TRIP_INITIAL_BUDGET = "initial_budget";
-    public static final String TRIP_BASE_CURRENCY = "base_currency";
-    public static final String TRIP_OUTCOME_TOTAL = "outcome_total_transaction";
-    public static final String TRIP_NOTE = "note";
 
     //TRANSACTION
     public static final String TRANSACTION_ID = "id";
@@ -42,6 +24,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TRANSACTION_DESCRIPTION = "description";
     public static final String TRANSACTION_DATE = "transaction_date";
 
+    //CATEGORIES
+    public static final String CATEGORIES_ID = "id";
+    public static final String CATEGORIES_NAME = "name";
+    public static final String CATEGORIES_TYPE = "type";
+
     //field created at
     public static final String COLUMN_CREATED_AT = "created_at";
     //EXCHANGE
@@ -52,28 +39,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String EXCHANGE_RATE = "rate";
 
     //CREATE TABLE
-    private static final String CREATE_TABLE_USER = "CREATE TABLE " + TABLE_USER + "("
-            + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + USER_NAME + " TEXT, "
-            + USER_EMAIL + " TEXT UNIQUE, "
-            + USER_PASSWORD + " TEXT"
-            + ")";
 
-    private static final String CREATE_TABLE_TRIP = "CREATE TABLE " + TABLE_TRIP + "("
-            + TRIP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + TRIP_USER_ID + " INTEGER, "
-            + TRIP_NAME + " TEXT, "
-            + TRIP_DESTINATION_COUNTRY + " TEXT, "
-            + TRIP_START_DATE + " TEXT, "
-            + TRIP_END_DATE + " TEXT, "
-            + TRIP_INITIAL_BUDGET + " REAL, "
-            + TRIP_BASE_CURRENCY + " TEXT NOT NULL, "
-            + TRIP_OUTCOME_TOTAL + " REAL DEFAULT 0, "
-            + TRIP_NOTE + " TEXT, "
+
+    private static final String CREATE_TABLE_TRANSACTION = "CREATE TABLE " + TABLE_TRANSACTION + "("
+            + TRANSACTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + TRANSACTION_TRIP_ID + " INTEGER NOT NULL, "
+            + TRANSACTION_CATEGORY_ID + " INTEGER, "
+            + TRANSACTION_TYPE + " TEXT NOT NULL CHECK(" + TRANSACTION_TYPE + " IN ('income','expense')), "
+            + TRANSACTION_AMOUNT + " REAL NOT NULL, "
+            + TRANSACTION_CURRENCY_CODE + " TEXT NOT NULL, "
+            + TRANSACTION_CONVERTED_AMOUNT + " REAL NOT NULL, "
+            + TRANSACTION_DESCRIPTION + " TEXT, "
+            + TRANSACTION_DATE + " TEXT NOT NULL, "
             + COLUMN_CREATED_AT + " TEXT DEFAULT CURRENT_TIMESTAMP, "
-            + "FOREIGN KEY(" + TRIP_USER_ID + ") REFERENCES " + TABLE_USER + "(" + USER_ID + ")"
+            + "FOREIGN KEY(" + TRANSACTION_TRIP_ID + ") REFERENCES " + TripDAO.TABLE_TRIP + "(" + TripDAO.TRIP_ID + "), "
+            + "FOREIGN KEY(" + TRANSACTION_CATEGORY_ID + ") REFERENCES " + TripDAO.TABLE_TRIP + "(" + CATEGORIES_ID + ")"
             + ")";
 
+    private static final String CREATE_TABLE_TRANSACTION_CATEGORIES = "CREATE TABLE " + TABLE_TRANSACTION_CATEGORIES + "("
+            + CATEGORIES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + CATEGORIES_NAME + " TEXT NOT NULL UNIQUE, "
+            + CATEGORIES_TYPE + " TEXT NOT NULL CHECK(" + CATEGORIES_TYPE + " IN ('income','expense')), "
+            + COLUMN_CREATED_AT + " TEXT DEFAULT CURRENT_TIMESTAMP"
+            + ")";
+
+    private static final String CREATE_TABLE_EXCHANGE = "CREATE TABLE " + TABLE_EXCHANGE + "("
+            + EXCHANGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + EXCHANGE_TRIP_ID + " INTEGER NOT NULL, "
+            + EXCHANGE_FROM_CURRENCY + " TEXT NOT NULL, "
+            + EXCHANGE_TO_CURRENCY + " TEXT NOT NULL, "
+            + EXCHANGE_RATE + " REAL NOT NULL, "
+            + COLUMN_CREATED_AT + " TEXT DEFAULT CURRENT_TIMESTAMP, "
+            + "FOREIGN KEY(" + EXCHANGE_TRIP_ID + ") REFERENCES " + TripDAO.TABLE_TRIP + "(" + TripDAO.TRIP_ID + ")"
+            + ")";
 
     public DatabaseHelper(Context mCtx){
 
@@ -82,14 +80,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_USER);
-        db.execSQL(CREATE_TABLE_TRIP);
+        db.execSQL(UserDAO.CREATE_TABLE_USER);
+        db.execSQL(TripDAO.CREATE_TABLE_TRIP);
+        db.execSQL(CREATE_TABLE_TRANSACTION);
+        db.execSQL(CREATE_TABLE_TRANSACTION_CATEGORIES);
+        db.execSQL(CREATE_TABLE_EXCHANGE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_TRIP);
+        db.execSQL("DROP TABLE IF EXISTS "+UserDAO.TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS "+TripDAO.TABLE_TRIP);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_TRANSACTION);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_TRANSACTION_CATEGORIES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_EXCHANGE);
+
         onCreate(db);
     }
 }
