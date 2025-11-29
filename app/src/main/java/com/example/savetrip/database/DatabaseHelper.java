@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     static final String DBNAME = "SaveTripDB.db";
-    static final int DBVERSION = 1;
+    static final int DBVERSION = 2;
 
     public static final String TABLE_TRANSACTION = "Transactions";
     public static final String TABLE_TRANSACTION_CATEGORIES = "Transaction_categories";

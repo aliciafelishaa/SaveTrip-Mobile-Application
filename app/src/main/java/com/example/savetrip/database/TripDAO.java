@@ -47,7 +47,7 @@ public class TripDAO {
         long result = -1;
         SQLiteDatabase db = this.dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(TRIP_ID, trip.getUserId());
+        cv.put(TRIP_USER_ID, trip.getUserId());
         cv.put(TRIP_NAME, trip.getTripName());
         cv.put(TRIP_DESTINATION_COUNTRY, trip.getDestinationCountry());
         cv.put(TRIP_START_DATE, trip.getStartDate());

@@ -3,6 +3,8 @@ package com.example.savetrip;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -12,10 +14,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.savetrip.adapter.TripAdapter;
+import com.example.savetrip.database.DatabaseHelper;
+import com.example.savetrip.database.TripDAO;
+import com.example.savetrip.model.Trip;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtGreeting;
+    Button btnAddTrip;
+    TripAdapter tripAdapter;
+    RecyclerView rvTrip;
+    ArrayList<Trip> trips;
     int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         txtGreeting = findViewById(R.id.txtGreeting);
+        btnAddTrip = findViewById(R.id.btnAddTrip);
+        btnAddTrip.setOnClickListener(this);
 
         SharedPreferences sp = getSharedPreferences("USER_SESSION", MODE_PRIVATE);
         String username = sp.getString("username", "User");
@@ -38,10 +55,40 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        TripDAO tripDAO = new TripDAO(dbHelper);
         txtGreeting.setText("Hi, " + username + " 👋");
 
+        rvTrip = findViewById(R.id.rvTrip);
+        rvTrip.setLayoutManager(new LinearLayoutManager(this));
+
+        trips = tripDAO.getTripsByUserId(userId);
+        tripAdapter = new TripAdapter(trips);
+        rvTrip.setAdapter(tripAdapter);
 
     }
 
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(this, AddTripActivity.class);
+        intent.putExtra("USER_ID", userId);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        TripDAO tripDAO = new TripDAO(dbHelper);
+
+        trips = tripDAO.getTripsByUserId(userId);
+
+        tripAdapter = new TripAdapter(trips);
+        rvTrip.setAdapter(tripAdapter);
+
+        tripAdapter.notifyDataSetChanged();
+    }
 
 }
