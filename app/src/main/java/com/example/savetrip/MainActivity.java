@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtGreeting;
-    Button btnAddTrip;
+    Button btnAddTrip, btnLogOut;
     TripAdapter tripAdapter;
     RecyclerView rvTrip;
     ArrayList<Trip> trips;
@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtGreeting = findViewById(R.id.txtGreeting);
         btnAddTrip = findViewById(R.id.btnAddTrip);
         btnAddTrip.setOnClickListener(this);
+
+        btnLogOut = findViewById(R.id.logOutBtn);
+        btnLogOut.setOnClickListener(v -> logOut());
 
         SharedPreferences sp = getSharedPreferences("USER_SESSION", MODE_PRIVATE);
         String username = sp.getString("username", "User");
@@ -89,6 +92,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rvTrip.setAdapter(tripAdapter);
 
         tripAdapter.notifyDataSetChanged();
+    }
+
+    public void logOut(){
+        SharedPreferences sp = getSharedPreferences("USER_SESSION", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
 }
