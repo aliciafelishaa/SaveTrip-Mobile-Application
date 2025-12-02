@@ -10,52 +10,47 @@
     android:background="#F7F7F7"
     tools:context=".MainActivity">
 
-    <include
-        layout="@layout/toolbar"/>
-
-    <!-- Greeting + Add Button in Row -->
+    <!-- Greeting Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="12dp">
 
         <TextView
             android:id="@+id/txtGreeting"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hi, User"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_weight="1"
             android:textColor="#222"/>
 
-        <Button
-            android:id="@+id/btnAddTrip"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Trip"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:backgroundTint="#3F51B5"
-            android:textColor="#FFFFFF"
-            android:layout_marginLeft="12dp"/>
+            android:text="Let's Make Ur Trip Save."
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            android:textColor="#444"/>
     </LinearLayout>
 
-    <!-- Divider -->
-    <View
+    <!-- Add Button -->
+    <Button
+        android:id="@+id/btnAddTrip"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC"
-        android:layout_marginBottom="12dp"/>
+        android:layout_height="wrap_content"
+        android:text="Add Trip"
+        android:backgroundTint="#3F51B5"
+        android:textColor="#FFFFFF" />
 
-    <!-- Trip List Container -->
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTrip"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="4dp"/>
+        android:padding="4dp" />
+
 </LinearLayout>
