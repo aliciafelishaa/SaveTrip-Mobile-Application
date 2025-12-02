@@ -8,12 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,13 +17,15 @@ import com.example.savetrip.adapter.TripAdapter;
 import com.example.savetrip.database.DatabaseHelper;
 import com.example.savetrip.database.TripDAO;
 import com.example.savetrip.model.Trip;
+import com.example.savetrip.view.AddTripActivity;
+import com.example.savetrip.view.LoginActivity;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtGreeting;
-    Button btnAddTrip, btnLogOut;
+    Button btnAddTrip, btnLogOut, btnDetail;
     TripAdapter tripAdapter;
     RecyclerView rvTrip;
     ArrayList<Trip> trips;
@@ -44,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtGreeting = findViewById(R.id.txtGreeting);
         btnAddTrip = findViewById(R.id.btnAddTrip);
         btnAddTrip.setOnClickListener(this);
-
         btnLogOut = findViewById(R.id.logOutBtn);
         btnLogOut.setOnClickListener(v -> logOut());
 
@@ -68,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trips = tripDAO.getTripsByUserId(userId);
         tripAdapter = new TripAdapter(trips);
         rvTrip.setAdapter(tripAdapter);
-
     }
 
 

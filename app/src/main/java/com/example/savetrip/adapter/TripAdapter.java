@@ -1,15 +1,19 @@
 package com.example.savetrip.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.savetrip.MainActivity;
 import com.example.savetrip.R;
 import com.example.savetrip.model.Trip;
+import com.example.savetrip.view.DetailViewActivity;
 
 import java.util.ArrayList;
 
@@ -22,6 +26,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ItemViewHolder
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder{
         TextView tvName, tvDestination, tvBudget, tvOutcome, tvStartDate, tvEndDate;
+        Button btnDetails;
 
         public ItemViewHolder(@NonNull View itemView){
             super(itemView);
@@ -31,6 +36,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ItemViewHolder
             tvOutcome = itemView.findViewById(R.id.tvOutcome);
             tvStartDate = itemView.findViewById(R.id.tvStartDate);
             tvEndDate = itemView.findViewById(R.id.tvEndDate);
+            btnDetails = itemView.findViewById(R.id.btnDetails);
         }
     }
 
@@ -52,12 +58,28 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ItemViewHolder
         holder.tvStartDate.setText("Start Date: "+ currTrip.getStartDate());
         holder.tvEndDate.setText("End Date: "+ currTrip.getEndDate());
 
+
+        holder.btnDetails.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), DetailViewActivity.class);
+
+            // KIRIM DATA KE DETAIL
+            intent.putExtra("tripName", currTrip.getTripName());
+            intent.putExtra("destination", currTrip.getDestinationCountry());
+            intent.putExtra("budget", currTrip.getInitialBudget());
+            intent.putExtra("outcome", currTrip.getOutcomeTotalTransaction());
+            intent.putExtra("startDate", currTrip.getStartDate());
+            intent.putExtra("endDate", currTrip.getEndDate());
+
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override
     public int getItemCount() {
         return trips == null ? 0 : trips.size();
     }
+
+
 
 
 }
