@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -42,7 +43,8 @@ public class AddTripActivity extends AppCompatActivity implements View.OnClickLi
         etNote = findViewById(R.id.etNote);
         btnSaveTrip = findViewById(R.id.btnSaveTrip);
         btnSaveTrip.setOnClickListener(this);
-
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
     }
 
     @Override

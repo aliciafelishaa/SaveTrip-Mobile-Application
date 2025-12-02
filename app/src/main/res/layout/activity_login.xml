@@ -12,6 +12,7 @@
     <include
         layout="@layout/toolbar"/>
 
+
     <EditText
         android:id="@+id/etEmail"
         android:hint="Email"

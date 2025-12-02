@@ -1,70 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:orientation="vertical"
-    tools:context=".AddTripActivity">
+    android:fillViewport="true"
+    android:background="#F5F5F5">
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Trip Name"
-        android:id="@+id/etTripName"
-        ></EditText>
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Destination"
-        android:id="@+id/etDestination"
-        ></EditText>
+        <!-- Header Gradient Purple -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center_vertical"
+            android:padding="24dp"
+            android:background="@drawable/bg_header_gradient">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Base Currency (e.g IDR)"
-        android:id="@+id/etBaseCurrency"
-        ></EditText>
+            <!-- BACK BUTTON -->
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@android:color/transparent"
+                android:padding="6dp"
+                android:src="@drawable/back"
+                android:layout_marginRight="10dp"
+                />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Start Date"
-        android:focusable="false"
-        android:id="@+id/etStartDate"
-        ></EditText>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Your Trip Now"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="End Date"
-        android:focusable="false"
-        android:id="@+id/etEndDate"
-        ></EditText>
+        <!-- Card Form -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/bg_card"
+            android:elevation="1dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Initial Budget"
-        android:inputType="number"
-        android:id="@+id/etInitialBudget"
-        ></EditText>
+            <!-- Trip Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trip Name"
+                android:textSize="14sp"
+                android:textColor="#555" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Note"
-        android:id="@+id/etNote"
-        ></EditText>
+            <EditText
+                android:id="@+id/etTripName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter trip name"
+                android:padding="12dp"
+                android:background="@drawable/bg_input" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save Trip"
-        android:id="@+id/btnSaveTrip"></Button>
+            <!-- Destination -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destination"
+                android:layout_marginTop="14dp"
+                android:textSize="14sp"
+                android:textColor="#555" />
 
-  </LinearLayout>
+            <EditText
+                android:id="@+id/etDestination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Your destination"
+                android:padding="12dp"
+                android:background="@drawable/bg_input" />
+
+            <!-- Base Currency -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Base Currency"
+                android:layout_marginTop="14dp"
+                android:textSize="14sp"
+                android:textColor="#555" />
+
+            <EditText
+                android:id="@+id/etBaseCurrency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="e.g. IDR"
+                android:padding="12dp"
+                android:background="@drawable/bg_input" />
+
+            <!-- Start Date -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date"
+                android:layout_marginTop="14dp"
+                android:textSize="14sp"
+                android:textColor="#555" />
+
+            <EditText
+                android:id="@+id/etStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select start date"
+                android:focusable="false"
+                android:padding="12dp"
+                android:background="@drawable/bg_input" />
+
+            <!-- End Date -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Date"
+                android:layout_marginTop="14dp"
+                android:textSize="14sp"
+                android:textColor="#555" />
+
+            <EditText
+                android:id="@+id/etEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select end date"
+                android:focusable="false"
+                android:padding="12dp"
+                android:background="@drawable/bg_input" />
+
+            <!-- Initial Budget -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Initial Budget"
+                android:layout_marginTop="14dp"
+                android:textSize="14sp"
+                android:textColor="#555" />
+
+            <EditText
+                android:id="@+id/etInitialBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Your budget amount"
+                android:inputType="number"
+                android:padding="12dp"
+                android:background="@drawable/bg_input" />
+
+            <!-- Note -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Note"
+                android:layout_marginTop="14dp"
+                android:textSize="14sp"
+                android:textColor="#555" />
+
+            <EditText
+                android:id="@+id/etNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Additional notes (optional)"
+                android:padding="12dp"
+                android:background="@drawable/bg_input" />
+
+            <!-- Save Button -->
+            <Button
+                android:id="@+id/btnSaveTrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Trip"
+                android:textAllCaps="false"
+                android:layout_marginTop="22dp"
+                android:padding="14dp"
+                android:background="@drawable/bg_button"
+                android:textColor="#FFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

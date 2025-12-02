@@ -46,11 +46,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ItemViewHolder
         if (trips == null || trips.size() == 0) return;
         Trip currTrip = trips.get(position);
         holder.tvName.setText(currTrip.getTripName());
-        holder.tvDestination.setText(currTrip.getDestinationCountry());
-        holder.tvBudget.setText(String.valueOf(currTrip.getInitialBudget()));
-        holder.tvOutcome.setText(String.valueOf(currTrip.getOutcomeTotalTransaction()));
-        holder.tvStartDate.setText(currTrip.getStartDate());
-        holder.tvEndDate.setText(currTrip.getEndDate());
+        holder.tvDestination.setText("Destination: "+ currTrip.getDestinationCountry());
+        holder.tvBudget.setText("Budget: "+ String.valueOf(currTrip.getInitialBudget()));
+        holder.tvOutcome.setText("Outcome: "+ String.valueOf(currTrip.getOutcomeTotalTransaction()));
+        holder.tvStartDate.setText("Start Date: "+ currTrip.getStartDate());
+        holder.tvEndDate.setText("End Date: "+ currTrip.getEndDate());
 
     }
 
