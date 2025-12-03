@@ -1,5 +1,6 @@
 package com.example.savetrip.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -98,6 +99,81 @@ public class TripDAO {
 
         cursor.close();
         return trips;
+    }
+
+    @SuppressLint("Range")
+    public Trip getTripById(int tripId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Trip trip = null;
+
+        Cursor cursor = db.query(
+                TABLE_TRIP,
+                null,
+                TRIP_ID + " = ?",
+                new String[]{String.valueOf(tripId)},
+                null,
+                null,
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            trip = new Trip();
+
+            trip.setTripId(cursor.getInt(cursor.getColumnIndex(TRIP_ID)));
+            trip.setUserId(cursor.getInt(cursor.getColumnIndex(TRIP_USER_ID)));
+            trip.setTripName(cursor.getString(cursor.getColumnIndex(TRIP_NAME)));
+            trip.setDestinationCountry(cursor.getString(cursor.getColumnIndex(TRIP_DESTINATION_COUNTRY)));
+            trip.setStartDate(cursor.getString(cursor.getColumnIndex(TRIP_START_DATE)));
+            trip.setEndDate(cursor.getString(cursor.getColumnIndex(TRIP_END_DATE)));
+            trip.setInitialBudget(cursor.getDouble(cursor.getColumnIndex(TRIP_INITIAL_BUDGET)));
+            trip.setBaseCurrency(cursor.getString(cursor.getColumnIndex(TRIP_BASE_CURRENCY)));
+            trip.setOutcomeTotalTransaction(cursor.getDouble(cursor.getColumnIndex(TRIP_OUTCOME_TOTAL)));
+            trip.setNote(cursor.getString(cursor.getColumnIndex(TRIP_NOTE)));
+            trip.setCreatedAt(cursor.getString(cursor.getColumnIndex(COLUMN_CREATED_AT)));
+        }
+
+        cursor.close();
+        return trip;
+    }
+
+    @SuppressLint("Range")
+    public Trip getTripWithExpenseTotalById(int tripId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Trip trip = null;
+
+        // Ambil data trip
+        Cursor cursor = db.query(
+                TABLE_TRIP,
+                null,
+                TRIP_ID + " = ?",
+                new String[]{String.valueOf(tripId)},
+                null, null, null
+        );
+
+        if (cursor.moveToFirst()) {
+            trip = new Trip();
+            trip.setTripId(cursor.getInt(cursor.getColumnIndex(TRIP_ID)));
+            trip.setUserId(cursor.getInt(cursor.getColumnIndex(TRIP_USER_ID)));
+            trip.setTripName(cursor.getString(cursor.getColumnIndex(TRIP_NAME)));
+            trip.setDestinationCountry(cursor.getString(cursor.getColumnIndex(TRIP_DESTINATION_COUNTRY)));
+            trip.setStartDate(cursor.getString(cursor.getColumnIndex(TRIP_START_DATE)));
+            trip.setEndDate(cursor.getString(cursor.getColumnIndex(TRIP_END_DATE)));
+            trip.setInitialBudget(cursor.getDouble(cursor.getColumnIndex(TRIP_INITIAL_BUDGET)));
+            trip.setBaseCurrency(cursor.getString(cursor.getColumnIndex(TRIP_BASE_CURRENCY)));
+            trip.setNote(cursor.getString(cursor.getColumnIndex(TRIP_NOTE)));
+            trip.setCreatedAt(cursor.getString(cursor.getColumnIndex(COLUMN_CREATED_AT)));
+
+            // Hitung total expense
+            String sumQuery = "SELECT SUM(amount) as totalExpense FROM Transactions WHERE trip_id = ? AND type = 'expense'";
+            Cursor sumCursor = db.rawQuery(sumQuery, new String[]{String.valueOf(tripId)});
+            if (sumCursor.moveToFirst()) {
+                trip.setOutcomeTotalTransaction(sumCursor.getDouble(sumCursor.getColumnIndex("totalExpense")));
+            }
+            sumCursor.close();
+        }
+
+        cursor.close();
+        return trip;
     }
 
 

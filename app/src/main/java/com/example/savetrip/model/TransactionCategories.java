@@ -3,13 +3,13 @@ package com.example.savetrip.model;
 public class TransactionCategories {
     private int id;
     private String name;
-    private String type;
+    private int typeId;
     private String createdAt;
 
-    public TransactionCategories(int id, String name, String type, String createdAt) {
+    public TransactionCategories(int id, String name, int typeId, String createdAt) {
         this.id = id;
         this.name = name;
-        this.type = type;
+        this.typeId = typeId;
         this.createdAt = createdAt;
     }
 
@@ -29,12 +29,12 @@ public class TransactionCategories {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public String getCreatedAt() {
@@ -44,4 +44,6 @@ public class TransactionCategories {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
+
 }

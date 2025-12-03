@@ -4,6 +4,8 @@ public class Transaction {
     private int id;
     private int tripId;
     private int categoryId;
+    private String name;
+
     private String type;
     private double amount;
     private String currencyCode;
@@ -11,14 +13,26 @@ public class Transaction {
     private String description;
     private String transactionDate;
     private String createdAt;
+    private String categoryName;
 
-    public Transaction(int tripId, int categoryId, String type,
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+
+    public Transaction (){};
+    public Transaction(int tripId, int categoryId, String name, String type,
                        double amount, String currencyCode,
                        double convertedAmount, String description,
                        String transactionDate) {
 
         this.tripId = tripId;
         this.categoryId = categoryId;
+        this.name = name;
         this.type = type;
         this.amount = amount;
         this.currencyCode = currencyCode;
@@ -105,5 +119,12 @@ public class Transaction {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
