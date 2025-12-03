@@ -79,7 +79,7 @@
                     android:textColor="#555" />
 
                 <EditText
-                    android:id="@+id/etDescription"
+                    android:id="@+id/etTransDescription"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:hint="What is this transaction about?"
@@ -121,7 +121,7 @@
                     android:textColor="#555" />
 
                 <EditText
-                    android:id="@+id/etCurrency"
+                    android:id="@+id/etTransCurrency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="e.g. IDR, SGD"
@@ -173,7 +173,8 @@
                     android:padding="14dp"
                     android:background="@drawable/bg_button"
                     android:textColor="#FFF"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    android:onClick="onClickAddTrans"/>
 
             </LinearLayout>
 

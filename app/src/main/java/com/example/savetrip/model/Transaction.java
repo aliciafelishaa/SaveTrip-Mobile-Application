@@ -12,6 +12,7 @@ public class Transaction {
     private String transactionDate;
     private String createdAt;
 
+    public Transaction (){};
     public Transaction(int tripId, int categoryId, String type,
                        double amount, String currencyCode,
                        double convertedAmount, String description,

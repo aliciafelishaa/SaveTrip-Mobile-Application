@@ -63,6 +63,7 @@ public class AddTripActivity extends AppCompatActivity implements View.OnClickLi
             DatabaseHelper dbHelper = new DatabaseHelper(this);
             TripDAO tripDao = new TripDAO(dbHelper);
             Trip trip = new Trip();
+
             if (strName.isEmpty() || strDestination.isEmpty() ||
                     strStartDate.isEmpty() || strEndDate.isEmpty() ||
                     strBaseCurrency.isEmpty()) {
@@ -71,7 +72,6 @@ public class AddTripActivity extends AppCompatActivity implements View.OnClickLi
                 return;
             }
             Intent intent = new Intent(this, MainActivity.class);
-
             trip.setUserId(userId);
             trip.setTripName(strName);
             trip.setDestinationCountry(strDestination);
