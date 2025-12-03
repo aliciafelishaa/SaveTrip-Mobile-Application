@@ -61,8 +61,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ItemViewHolder
 
         holder.btnDetails.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), DetailViewActivity.class);
-
             // KIRIM DATA KE DETAIL
+            intent.putExtra("trip_id", currTrip.getTripId());
             intent.putExtra("tripName", currTrip.getTripName());
             intent.putExtra("destination", currTrip.getDestinationCountry());
             intent.putExtra("budget", currTrip.getInitialBudget());
