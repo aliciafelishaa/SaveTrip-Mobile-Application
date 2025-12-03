@@ -75,8 +75,12 @@ public class DetailViewActivity extends AppCompatActivity {
 
         int tripId = getIntent().getIntExtra("trip_id", -1);
         DatabaseHelper db = new DatabaseHelper(this);
+
         TransactionDAO dao = new TransactionDAO(db);
         transactionList = dao.getTransactionWithCategoryNameByTripId(tripId);
+
+        double totaleExpense = dao.getTotalExpenseByTripId(tripId);
+        tvOutcome.setText("Total Expense: Rp " + totaleExpense);
 
         // 4. Set Adapter
         adapter = new TransactionAdapter(transactionList);

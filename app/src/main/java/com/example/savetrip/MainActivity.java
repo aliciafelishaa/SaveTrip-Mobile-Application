@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         txtGreeting = findViewById(R.id.txtGreeting);
         btnAddTrip = findViewById(R.id.btnAddTrip);
         btnAddTrip.setOnClickListener(this);
@@ -62,8 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rvTrip = findViewById(R.id.rvTrip);
         rvTrip.setLayoutManager(new LinearLayoutManager(this));
 
-        trips = tripDAO.getTripsByUserId(userId);
-        tripAdapter = new TripAdapter(trips);
+        trips = new ArrayList<>();
+        for (Trip t : tripDAO.getTripsByUserId(userId)) {
+            Trip fullTrip = tripDAO.getTripWithExpenseTotalById(t.getTripId());
+            trips.add(fullTrip);
+        }
+        tripAdapter = new TripAdapter(this, trips);
         rvTrip.setAdapter(tripAdapter);
     }
 
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         trips = tripDAO.getTripsByUserId(userId);
 
-        tripAdapter = new TripAdapter(trips);
+        tripAdapter = new TripAdapter(this,trips);
         rvTrip.setAdapter(tripAdapter);
 
         tripAdapter.notifyDataSetChanged();

@@ -140,4 +140,20 @@ public class TransactionDAO {
         return trans;
     }
 
+    @SuppressLint("Range")
+    public double getTotalExpenseByTripId(int tripId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        double total = 0;
+
+        String query = "SELECT SUM(amount) as totalExpense FROM " + TABLE_TRANSACTION +
+                " WHERE trip_id = ? AND type = 'expense'";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(tripId)});
+        if(cursor.moveToFirst()) {
+            total = cursor.getDouble(cursor.getColumnIndex("totalExpense"));
+        }
+        cursor.close();
+        return total;
+    }
+
+
 }

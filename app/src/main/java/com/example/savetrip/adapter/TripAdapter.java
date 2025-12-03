@@ -1,5 +1,6 @@
 package com.example.savetrip.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.savetrip.MainActivity;
 import com.example.savetrip.R;
+import com.example.savetrip.database.DatabaseHelper;
+import com.example.savetrip.database.TransactionDAO;
 import com.example.savetrip.model.Trip;
 import com.example.savetrip.view.DetailViewActivity;
 
@@ -19,8 +22,10 @@ import java.util.ArrayList;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ItemViewHolder> {
     ArrayList<Trip> trips;
+    Context context;
 
-    public TripAdapter(ArrayList<Trip> trip){
+    public TripAdapter(Context context, ArrayList<Trip> trip){
+        this.context = context;
         this.trips=trip;
     }
 
@@ -57,6 +62,12 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ItemViewHolder
         holder.tvOutcome.setText("Outcome: "+ String.valueOf(currTrip.getOutcomeTotalTransaction()));
         holder.tvStartDate.setText("Start Date: "+ currTrip.getStartDate());
         holder.tvEndDate.setText("End Date: "+ currTrip.getEndDate());
+
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        TransactionDAO transactionDAO = new TransactionDAO(dbHelper);
+        double totalExpense = transactionDAO.getTotalExpenseByTripId(currTrip.getTripId());
+
+        holder.tvOutcome.setText("Total Expense: " + totalExpense);
 
 
         holder.btnDetails.setOnClickListener(v -> {
