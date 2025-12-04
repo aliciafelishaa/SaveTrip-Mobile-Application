@@ -43,6 +43,19 @@
 
     <!-- ADD TRIP BUTTON -->
     <Button
+        android:id="@+id/btnUpdateRates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="See Updated Exchange Rate"
+        android:textAllCaps="false"
+        android:backgroundTint="#6A1B4A"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="12dp"
+        />
+
+    <!-- ADD TRIP BUTTON -->
+    <Button
         android:id="@+id/btnAddTrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,9 +66,6 @@
         android:layout_marginVertical="12dp"
         android:layout_marginHorizontal="12dp"
         />
-
-
-
 
 
     <!-- CONTENT WRAPPER -->
