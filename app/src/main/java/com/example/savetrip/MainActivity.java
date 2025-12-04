@@ -18,6 +18,7 @@ import com.example.savetrip.database.DatabaseHelper;
 import com.example.savetrip.database.TripDAO;
 import com.example.savetrip.model.Trip;
 import com.example.savetrip.view.AddTripActivity;
+import com.example.savetrip.view.ExchangeRateActivity;
 import com.example.savetrip.view.LoginActivity;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtGreeting;
-    Button btnAddTrip, btnLogOut, btnDetail;
+    Button btnAddTrip, btnLogOut, btnDetail, btnDetailExchangeRate;
     TripAdapter tripAdapter;
     RecyclerView rvTrip;
     ArrayList<Trip> trips;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
 
         txtGreeting = findViewById(R.id.txtGreeting);
+        btnDetailExchangeRate = findViewById(R.id.btnUpdateRates);
+        btnDetailExchangeRate.setOnClickListener(this);
         btnAddTrip = findViewById(R.id.btnAddTrip);
         btnAddTrip.setOnClickListener(this);
         btnLogOut = findViewById(R.id.logOutBtn);
@@ -73,9 +76,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(this, AddTripActivity.class);
-        intent.putExtra("USER_ID", userId);
-        startActivity(intent);
+        if (v.getId() == R.id.btnAddTrip) {
+            Intent intent = new Intent(this, AddTripActivity.class);
+            intent.putExtra("USER_ID", userId);
+            startActivity(intent);
+        } else if (v.getId() == R.id.btnUpdateRates) {
+            Intent intent = new Intent(this, ExchangeRateActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
